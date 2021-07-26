@@ -1,0 +1,24 @@
+
+.content{
+--background: linear-gradient(0deg, rgba(34,176,195,1) 0%, rgba(45,142,253,1) 100%);
+}
+.page-content{
+    display: flex;
+    justify-content: center;
+    font-size: x-large;
+    align-items: center;
+    height: 100%;
+    flex-direction: column;
+    color: white;
+}
+.loginButton, .registerButton{
+    width: 100px;
+}
+
+.loginButton{
+    --background: #2D8EFD;
+}
+.registerButton{
+    color: darkblue;
+    --background: #2DF6FD;
+}
