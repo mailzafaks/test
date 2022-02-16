@@ -1,0 +1,12 @@
+.list-of-chats-items{
+    display: flex;
+    align-items: center;
+
+    margin: 0.2rem;
+    border: 1px solid black;
+}
+
+.list-of-chats-item-img{
+    width: 8%;
+    border-radius: 100%;
+}

@@ -1,7 +1,7 @@
 import {IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonInput} from '@ionic/react';
 import '../Home.css';
 import {useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import {firestore, registerUser, storageRef} from './../../services/firebase-service';
 import './Registration.css';
 import {toast} from "../../toast";
@@ -16,6 +16,7 @@ const Registration: React.FC = () => {
         photoUrl: ''
     });
     const [file, setFile] = useState(new Blob());
+    const [goToChat, setGoToChat] = useState(false);
 
 
     const userDataChanged = (target: any) => {
@@ -27,22 +28,27 @@ const Registration: React.FC = () => {
     }
 
     async function register() {
-        console.log(userData)
 
-        //TODO:: NE RADI
         if (userData.photoUrl === 'url') {
-            const fileRef = storageRef.child(userData.lastName);
-            fileRef.put(file);
-            const url = await fileRef.getDownloadURL();
+            //const fileRef = storageRef.child(userData.email);
+            await storageRef.child(userData.email).put(file);
+            const url = await storageRef.child(userData.email).getDownloadURL();
             setUserData({...userData, 'photoUrl': url})
             userData.photoUrl = url;
         }
+
         const result = await registerUser(userData);
         if (!result) {
             await toast("Your registration failed, please enter all data!")
         } else {
             await toast("You register successfully!")
+            setGoToChat(true);
         }
+    }
+
+    if(goToChat){
+        //return <Redirect to="chat"/>;
+        return <Redirect to="list"/>;
     }
 
     return (

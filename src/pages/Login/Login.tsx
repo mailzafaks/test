@@ -15,6 +15,9 @@ const Login: React.FC = () => {
         if (!result) {
             await toast("Your credentials are invalid, please register!")
         } else {
+
+            console.log("result", result)
+
             await toast("You logged in successfully!")
             setGoToChat(true);
         }
@@ -30,9 +33,9 @@ const Login: React.FC = () => {
         <IonPage>
             <IonContent fullscreen>
                 <div className="login-form">
-                    <IonInput placeholder="email" value="user2@gmail.com"
+                    <IonInput placeholder="email"
                               onIonChange={(e: any) => setEmail(e.target.value)}/>
-                    <IonInput placeholder="password" value="123456"
+                    <IonInput placeholder="password"
                               onIonChange={(e: any) => setPassword(e.target.value)}/>
                     <IonButton onClick={login}>Login</IonButton>
                     <IonButton onClick={signInWithGoogle}>Login With Google</IonButton>

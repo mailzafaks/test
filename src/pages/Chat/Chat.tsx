@@ -19,6 +19,7 @@ const Chat: React.FC<ChatProps> = ({match}) => {
     const uid = auth.currentUser?.uid;
 
     const [formValue, setFormValue] = useState('');
+    const [file, setFile] = useState(undefined);
     const [messages, setMessages] = useState([]);
     const [user, setUser] = useState({});
     const [ref, setRef] = useState(firestore.collection("messages").doc(id + uid));
@@ -30,9 +31,7 @@ const Chat: React.FC<ChatProps> = ({match}) => {
 
     useEffect(() => {
         if (users) setUser(users[0])
-
-        const docRef = ref;
-        docRef.get().then((doc) => {
+        ref.get().then((doc) => {
             if (doc.exists) {
                 let data = doc.data();
                 data?.messages.sort((a: any, b: any) => {
@@ -74,6 +73,10 @@ const Chat: React.FC<ChatProps> = ({match}) => {
         });
     });
 
+    const addAttachment = async (target: any) => {
+        setFile(target.files[0]);
+
+    }
 
     const sendMessage = async (e: any) => {
         e.preventDefault();
@@ -92,6 +95,7 @@ const Chat: React.FC<ChatProps> = ({match}) => {
         setFormValue('');
     }
 
+
     return (
         <IonPage>
             <IonContent fullscreen>
@@ -104,7 +108,8 @@ const Chat: React.FC<ChatProps> = ({match}) => {
                 <form onSubmit={sendMessage}>
                     <input value={formValue} onChange={(e) => setFormValue(e.target.value)}
                            placeholder="say something nice"/>
-                    <button type="submit" disabled={!formValue}>🕊️</button>
+                    <input type="file" onChange={(e: any) => addAttachment(e.target)} placeholder="Attachment"/>
+                    <button type="submit" disabled={!formValue}>SEND</button>
                 </form>
             </IonContent>
         </IonPage>
